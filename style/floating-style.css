@@ -1,0 +1,90 @@
+/*.floating {
+    position: fixed;
+    width:200px;
+    height:150px;
+    top:100px;
+    right:10px;
+    padding:16px;
+    background:#FFFFFF;  
+    border:2px solid #2266AA;  
+    z-index:100;
+}
+*/
+/* summary */
+.console-output.summary{
+    margin-bottom: 5px;
+}
+
+.summary-title {
+	font-size: 24px;
+    font-weight: bold;
+    padding-left: 24px;
+    padding-bottom: 5px;
+}
+
+.summary-heading {
+	font-size: 18px;
+}
+
+
+.floating {
+    position:fixed;
+    top:85px;right:10px;
+    padding:16px;background:#FFFFFF;
+    border:2px solid #2266AA;  
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    text-align: center;
+    color: #555753;
+}
+
+.floating-title{
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.floating-button {
+    color: #FFFFFF;
+    background-color: #205081;
+    font-size: 14px;
+    padding: 7px 10px;
+    border: 1px solid;
+    text-align: center;
+    font-family: Helvetica, Arial, sans-serif;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    max-width: 70px;
+}
+
+.floating-button-large{
+    min-width: 100%;
+}
+
+.floating-button-small{
+}
+
+.floating-button.stash{
+}
+
+.navigating{
+    /*margin: 0 auto; Not useful?*/
+}
+
+.floating-button.previous-test{
+}
+
+.middle-text{
+    padding: 0px 10px;
+}
+
+.test-counter{
+    margin-top: -13px;
+    margin-bottom: 5px;
+}
+
+.floating-button.next-test{
+}
+
+.floating-button.end-log{
+}
