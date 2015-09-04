@@ -5,18 +5,18 @@
 }
 
 #suggestion {
-	font-size: 22px;
+    font-size: 22px;
 }
 
 .summary-title {
-	font-size: 24px;
+    font-size: 24px;
     font-weight: bold;
     padding-left: 24px;
     padding-bottom: 5px;
 }
 
 .summary-heading {
-	font-size: 18px;
+    font-size: 18px;
 }
 
 .floating {
@@ -46,7 +46,7 @@
     font-family: Helvetica, Arial, sans-serif;
     border-radius: 3px;
     margin-bottom: 5px;
-    max-width: 90px;
+    max-width: 80px;
 }
 
 .floating-button-large{
@@ -82,9 +82,9 @@
 }
 
 .stash {
-    width: 90px;
+    width: 80px;
 }
 
 .rebuild {
-    width: 90px;
+    width: 80px;
 }
