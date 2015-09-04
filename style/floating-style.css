@@ -1,18 +1,11 @@
-/*.floating {
-    position: fixed;
-    width:200px;
-    height:150px;
-    top:100px;
-    right:10px;
-    padding:16px;
-    background:#FFFFFF;  
-    border:2px solid #2266AA;  
-    z-index:100;
-}
-*/
 /* summary */
 .console-output.summary{
     margin-bottom: 5px;
+    color: ghostwhite; 
+}
+
+#suggestion {
+	font-size: 22px;
 }
 
 .summary-title {
@@ -25,7 +18,6 @@
 .summary-heading {
 	font-size: 18px;
 }
-
 
 .floating {
     position:fixed;

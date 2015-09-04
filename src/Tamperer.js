@@ -35,7 +35,7 @@ Tamperer.prototype.injectHTML = function(){
 		    </div>	\
 		    <button onclick="Tamperer.endOfLog()" class="floating-button end-log floating-button-large">Go to end of log</button>\
 		    <div class="other-buttons">\
-		    <button onclick="Tamperer.goToStashCommit()" class="floating-button floating-button-small">View #</button>\
+		    <button onclick="Tamperer.goToStashCommit()" class="floating-button floating-button-small">Stash</button>\
 			<button onclick="Tamperer.rebuildJob()" class="floating-button floating-button-small">Rebuild</button>\
 		    </div>\
 		</div>\
@@ -55,6 +55,7 @@ Tamperer.prototype.injectHTML = function(){
 		<div class="summary-heading">Failing/Erroring test suites: <span id="failing-suites"></span></div>	\
 		<div class="summary-heading">Number of failing tests:  <span id="failing-tests"></span> </div>	\
 		<div class="summary-heading">Suite names:  <span id="failing-suite-names"></span> </div>	\
+		<div class="summary-heading">Suggestion:  <span id="suggestion"></span> </div>	\
 	</div>									\
 	';
 
