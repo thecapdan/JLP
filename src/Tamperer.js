@@ -33,10 +33,10 @@ Tamperer.prototype.injectHTML = function(){
 		        </span>	\
 		        <button onclick="Tamperer.nextFailingTest()" class="floating-button next-test">&gt;</button>	\
 		    </div>	\
-		    <button onclick="Tamperer.endOfLog()" class="floating-button end-log floating-button-large">Go to end of log</button>\
+		    <button onclick="Tamperer.endOfLog()" class="floating-button end-log floating-button-large">Go to end of output</button>\
 		    <div class="other-buttons">\
-		    <button onclick="Tamperer.goToStashCommit()" class="floating-button floating-button-small">Stash</button>\
-			<button onclick="Tamperer.rebuildJob()" class="floating-button floating-button-small">Rebuild</button>\
+		    <button onclick="Tamperer.goToStashCommit()" class="floating-button floating-button-small stash">Stash</button>\
+			<button onclick="Tamperer.rebuildJob()" class="floating-button floating-button-small rebuild">Rebuild</button>\
 		    </div>\
 		</div>\
 	';
@@ -54,7 +54,7 @@ Tamperer.prototype.injectHTML = function(){
 		<div class="summary-title">Summary</div>	\
 		<div class="summary-heading">Failing/Erroring test suites: <span id="failing-suites"></span></div>	\
 		<div class="summary-heading">Number of failing tests:  <span id="failing-tests"></span> </div>	\
-		<div class="summary-heading">Suite names:  <span id="failing-suite-names"></span> </div>	\
+		<div class="summary-heading">Failures:  <span id="failing-suite-names"></span> </div>	\
 		<div class="summary-heading">Suggestion:  <span id="suggestion"></span> </div>	\
 	</div>									\
 	';
@@ -80,22 +80,53 @@ Tamperer.previousFailingTest = function(){
 	if(Tamperer.currentTestIndex > 0){
 		Tamperer.currentTestIndex--;
 	}
-
-	var heightOfNextFailingTest = Tamperer.storage.failingTestsArray[Tamperer.currentTestIndex].offsetTop -200;
-	scrollTo(0, heightOfNextFailingTest);
+	else if(Tamperer.currentTestIndex == 0){
+		Tamperer.currentTestIndex = Tamperer.storage.failingTestsArray.length - 1;
+	}
 
 	jQuery("#current-test").text(Tamperer.currentTestIndex + 1);
+
+	var heightOfNextFailingTest;
+	if(Tamperer.storage.testType == "JS"){
+		heightOfNextFailingTest = Tamperer.storage.failingTestsArray[Tamperer.currentTestIndex].offsetTop -200;
+		
+	}
+	else if(Tamperer.storage.testType == "THUC"){
+		var documentHeight = jQuery(document).height();
+		heightOfNextFailingTest = (Tamperer.storage.testLocationPercentages[Tamperer.currentTestIndex] * documentHeight) -600;
+		console.log("go to: " + heightOfNextFailingTest);
+	}
+
+	scrollTo(0, heightOfNextFailingTest);
+	
 };
 
 Tamperer.nextFailingTest = function(){
 	if(Tamperer.storage.failingTestsArray.length > Tamperer.currentTestIndex + 1){
 		Tamperer.currentTestIndex++;
 	}
-
-	var heightOfNextFailingTest = Tamperer.storage.failingTestsArray[Tamperer.currentTestIndex].offsetTop -200;
-	scrollTo(0, heightOfNextFailingTest);
+	else if(Tamperer.storage.failingTestsArray.length == Tamperer.currentTestIndex + 1){
+		Tamperer.currentTestIndex = 0;
+	}
 
 	jQuery("#current-test").text(Tamperer.currentTestIndex + 1);
+
+
+	var heightOfNextFailingTest;
+	if(Tamperer.storage.testType == "JS"){
+		heightOfNextFailingTest = Tamperer.storage.failingTestsArray[Tamperer.currentTestIndex].offsetTop -200;
+		
+	}
+	else if(Tamperer.storage.testType == "THUC"){
+		var documentHeight = jQuery(document).height();
+
+		heightOfNextFailingTest = (Tamperer.storage.testLocationPercentages[Tamperer.currentTestIndex] * documentHeight) -600;
+
+		console.log("go to: " + heightOfNextFailingTest);
+	}
+
+	scrollTo(0, heightOfNextFailingTest);
+	
 };
 
 Tamperer.endOfLog = function(){

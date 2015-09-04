@@ -46,7 +46,7 @@
     font-family: Helvetica, Arial, sans-serif;
     border-radius: 3px;
     margin-bottom: 5px;
-    max-width: 70px;
+    max-width: 90px;
 }
 
 .floating-button-large{
@@ -79,4 +79,12 @@
 }
 
 .floating-button.end-log{
+}
+
+.stash {
+    width: 90px;
+}
+
+.rebuild {
+    width: 90px;
 }
