@@ -1,11 +1,12 @@
-Tamperer = function(){
-	this.logParser = new LogParser();
+Tamperer = function(config){
+	this.logParser = new LogParser(config);
 };
 
 Tamperer.storage = {};
 Tamperer.currentTestIndex = -1;
 Tamperer.currentCommitHash;
 Tamperer.commitUrls = {
+	//TODO - calcualte this based on log output
 	CT: "https://stash.caplin.com/projects/CAPCT/repos/ct/commits/"
 }
 
@@ -52,7 +53,6 @@ Tamperer.prototype.injectHTML = function(){
 	newHTML2.innerHTML   = '				\
 	<div class="console-output summary">						\
 		<div class="summary-title">Summary</div>	\
-		<div class="summary-heading">Failing/Erroring test suites: <span id="failing-suites"></span></div>	\
 		<div class="summary-heading">Number of failing tests:  <span id="failing-tests"></span> </div>	\
 		<div class="summary-heading">Failures:  <span id="failing-suite-names"></span> </div>	\
 		<div class="summary-heading">Suggestion:  <span id="suggestion"></span> </div>	\
@@ -102,6 +102,7 @@ Tamperer.previousFailingTest = function(){
 };
 
 Tamperer.nextFailingTest = function(){
+	debugger;
 	if(Tamperer.storage.failingTestsArray.length > Tamperer.currentTestIndex + 1){
 		Tamperer.currentTestIndex++;
 	}

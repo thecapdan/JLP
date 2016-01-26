@@ -1,11 +1,12 @@
 
-LogParser = function() {
+LogParser = function(config) {
+	this.config = config;
+	this.testConfig = null;
 	this.failingTestsArray;
 	window.lp = this;
 };
 
-LogParser.prototype.hello = function() {
-	console.log("HELLOOOOOO bob");
+LogParser.prototype._getTestConfigForThisLog = function(){
 
 };
 
@@ -29,8 +30,7 @@ LogParser.prototype.parse = function() {
 
 	var arrayOfOutputLines = consoleOutput.innerText.split('\n');
 
-
-	var testType = "JS";
+	var testType = null;
 	/*
 	what kind of tests am i running
 	 */
@@ -40,34 +40,23 @@ LogParser.prototype.parse = function() {
 			Tamperer.currentCommitHash = arrayOfOutputLines[i].split(" ")[5];
 		}
 
-		if(arrayOfOutputLines[i].indexOf("Runner Report") > -1) 
-		{
-			testType = "JS";
-			Tamperer.storage.testType = "JS";
-			continue;
+		for(type in this.config) {
+			var testIdentifier = this.config[type].logIdentifier;
+			if(arrayOfOutputLines[i].indexOf(testIdentifier) > -1) {
+				this.testConfig = this.config[type];
+				Tamperer.storage.testType = testType = type;
+				break;
+			}
 		}
 
-		//INFO net.thucydides.core.Thucydides
-		//
-		if(arrayOfOutputLines[i].indexOf("INFO net.thucydides.core.Thucydides") > -1) 
-		{
-			testType = "THUC";
-			Tamperer.storage.testType = "THUC";
-			continue;
-		}
+		if(testType != null){
+				break;
+			}
 	}
 
-
-
-
-
-
-	// JS TESTS
-	// 
-			var failingTestSuites = 0;
-			var failingTests = 0;
-			var currentTests = "";
-			var testNames = "";
+	var failingTests = 0;
+	var currentTests = "";
+	var testNames = "";
 	if(testType == "JS") {
 
 			
@@ -78,17 +67,9 @@ LogParser.prototype.parse = function() {
 					currentTests = line.split(" ")[1] + " " + line.split(" ")[2] .substring(0, line.split(" ")[2] .length - 1);
 				}
 
-
-
 				if(arrayOfOutputLines[i].indexOf("Tests Failed.") > -1) {
-					failingTestSuites++;
+					failingTests++;
 					testNames += '<li>' + currentTests + '</li>';
-				}
-
-				//
-				if(arrayOfOutputLines[i].indexOf("; Fails:") > -1 && arrayOfOutputLines[i].indexOf("Windows: Run") == -1) {
-					var fails = parseInt(arrayOfOutputLines[i].split(" ")[6]);
-					failingTests+= fails;
 				}
 
 			}
@@ -105,12 +86,12 @@ LogParser.prototype.parse = function() {
 			Tamperer.storage.testLocationPercentages = [];
 			for(i = 0; i < arrayOfOutputLines.length; i++)
 			{				
-				if(arrayOfOutputLines[i].indexOf("TEST FAILED:") > -1) {
-					failingTestSuites++;
+				if(arrayOfOutputLines[i].indexOf(this.testConfig.failureIdentifier) > -1) {
+					//failingTestSuites++;
+					console.log(arrayOfOutputLines[i]);
+					debugger;
 					failingTests++;
 					testNames += '<li>' + arrayOfOutputLines[i].substr(13) + '</li>';
-					console.log("failure line: " + i);
-					console.log("output length: " + arrayOfOutputLines.length);
 					Tamperer.storage.failingTestsArray.push("a failing test");
 
 					Tamperer.storage.testLocationPercentages.push(i / arrayOfOutputLines.length);
@@ -121,15 +102,14 @@ LogParser.prototype.parse = function() {
 			testNames = '<ul>' + testNames + '</ul>';
 		}
 
-			jQuery("#failing-suites").text(failingTestSuites);
 			jQuery("#failing-tests").text(failingTests);
 			jQuery("#failing-suite-names").html(testNames);
 
 
-			jQuery("#total-test").text(failingTestSuites);
+			jQuery("#total-test").text(failingTests);
 
 
-			if(failingTests === 0 && failingTestSuites > 0){
+			if(failingTests === 0 ){
 				jQuery(".summary-heading #suggestion")[0].textContent = "Smells like bullshit... Rebuild";
 			}
 
